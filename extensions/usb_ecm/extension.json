@@ -1,0 +1,7 @@
+{
+  "id": "usb_ecm",
+  "name": "USB ECM",
+  "description": "Experimental: double-tap Record to read a JSON file over a USB Ethernet adapter and count its ids; the result shows as a popup.",
+  "claims": ["record_double_tap"],
+  "actions": ["notify"]
+}

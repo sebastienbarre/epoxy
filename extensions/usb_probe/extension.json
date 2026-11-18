@@ -1,0 +1,7 @@
+{
+  "id": "usb_probe",
+  "name": "USB probe",
+  "description": "Diagnostic: logs how the stock USB host sees a Realtek RTL8153 Ethernet adapter, and its descriptors, to the device's log.",
+  "claims": [],
+  "actions": []
+}
