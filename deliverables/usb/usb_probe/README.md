@@ -38,7 +38,7 @@ in hex (24 bytes a line), and `str 3 ret=<header>/<full>` with the MAC string.
 Check and build, from the repository that holds this folder, with the SDK checkout beside it:
 
 ```sh
-python ../open-xy/sdk.py test --extension extensions/usb_probe
+python ../open-xy/sdk.py test --extension deliverables/usb/usb_probe
 ```
 
 Installing a build is a device operation: ask for it explicitly.

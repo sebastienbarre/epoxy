@@ -1,7 +1,7 @@
 # Implementation Plan: Splitter Player for OP-XY
 
 This is the authoritative, current plan for the `splitter_player` machine in
-`machines/splitter-player`. It says what we are building and how. How and why it
+`deliverables/splitter/splitter_player`. It says what we are building and how. How and why it
 differs from the original specification is recorded in
 [PLAN_HISTORY.md](PLAN_HISTORY.md), which also points at the original text
 (git commit `44db806`). Entries there are referenced below as `H-nn`.
@@ -36,7 +36,7 @@ to. It never routes to other tracks, triggers other instruments, or rewrites
 recorded notes. It uses the SDK's existing note-processing path, as the stock
 Arpeggio, Hold and Maestro players do, and the existing `chords` player does.
 
-**Scope note.** A second, separate machine, `splitter-aux`, will route zones to
+**Scope note.** A second, separate machine, `splitter_aux`, will route zones to
 other tracks. It is not part of this plan, and this player has no destination
 track state.
 
@@ -238,7 +238,7 @@ pitch limits, note release after a setting changes, and the display strings and 
 overlay. Run:
 
 ```sh
-../.venv/bin/python ../open-xy/sdk.py test --machine machines/splitter-player
+../.venv/bin/python ../open-xy/sdk.py test --machine deliverables/splitter/splitter_player
 ```
 
 **Build** (from this repository). The player builds on its own with an SDK that
@@ -247,7 +247,7 @@ includes PR #481 (H-19):
 ```sh
 ../.venv/bin/python ../open-xy/sdk.py build --overwrite --out "../firmware/dev/001" \
   --stock-os ../firmware/1.2.1/os.ldr \
-  --machine machines/splitter-player
+  --machine deliverables/splitter/splitter_player
 ```
 
 The build writes `layout.json`, which holds the machine numbers (the player's type

@@ -250,7 +250,7 @@ is not evidenced, this file says so.
   its id helper `value()` is called only by rows for engines, effect pages and sample screens, so with none it was reported unused.
   Adding any engine, such as `fm2op`, made it compile. This was an SDK bug (issue #480), not a property of this player.
 - **Adjustment.** The owner asked for the cause to be found and fixed. PR #481 marks the helper unused and adds a regression test; it was
-  merged. `PLAN.md` and `README.md` now build with `--machine machines/splitter-player` alone. A build with the player alone succeeded on
+  merged. `PLAN.md` and `README.md` now build with `--machine deliverables/splitter/splitter_player` alone. A build with the player alone succeeded on
   `staging`.
 - **Rationale.** The extra machines were a workaround for an SDK defect.
 - **Consequences.** The build command is shorter. Building without `chords` removed its entry from the build's `layout.json`, so add it back with

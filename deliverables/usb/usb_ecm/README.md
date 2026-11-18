@@ -56,7 +56,7 @@ at most 256 ids kept. It can share a build with `usb_probe` (the SDK takes two d
 with another extension that claims Record.
 
 ```sh
-python ../open-xy/sdk.py test --extension extensions/usb_ecm
+python ../open-xy/sdk.py test --extension deliverables/usb/usb_ecm
 ```
 
 Installing a build is a device operation: ask for it explicitly.

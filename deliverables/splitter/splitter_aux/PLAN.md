@@ -5,7 +5,7 @@ Nothing is implemented. This file records the requirements, what the SDK
 investigation found, and the proposed plan, so the work can resume without
 repeating the investigation.
 
-The machine is the sibling of the [Splitter Player](../splitter-player/PLAN.md)
+The machine is the sibling of the [Splitter Player](../splitter_player/PLAN.md)
 (machine id `splitter_player`), and the machine id here is `splitter_aux`
 (name `Splitter Aux`).
 
@@ -181,10 +181,10 @@ destination or split), which needs checking on the device.
 repository root, outside `machines/` so it is not taken for a machine:
 
 ```txt
-common/splitter/zones.hpp      split and zone maths, encoder decoding, constants
-common/splitter/keyboard.py    key geometry from designs/splitter.svg, pixel snapping, shared by both artwork scripts
-machines/splitter-player/      refactored to use them; its tests must stay green
-machines/splitter-aux/         the new machine
+deliverables/splitter/common/zones.hpp      split and zone maths, encoder decoding, constants
+deliverables/splitter/common/keyboard.py    key geometry from designs/splitter.svg, pixel snapping, shared by both artwork scripts
+deliverables/splitter/splitter_player/      refactored to use them; its tests must stay green
+deliverables/splitter/splitter_aux/         the new machine
 ```
 
 Rules for the header: `#pragma once` (the SDK's lint rejects `#if`, `#ifndef`), plain

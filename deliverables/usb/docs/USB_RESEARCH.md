@@ -6,7 +6,7 @@
 > file over plain HTTP, and showed the number of ids in it on a Record double-tap. The SDK part (a
 > `usb_host_ready` event and control, `SET_INTERFACE` and bulk transfer services) is merged as
 > [etcetc000/open-xy#548](https://github.com/etcetc000/open-xy/pull/548); the extension is
-> `extensions/usb_ecm` in this repository. Sections 1 to 9 are the offline analysis that led there;
+> `deliverables/usb/usb_ecm` in this repository. Sections 1 to 9 are the offline analysis that led there;
 > section 10 is the proof of concept and its device results.
 
 ## Objective
@@ -489,14 +489,14 @@ In the SDK (`etcetc000/open-xy`, merged as #548; written on a `usb-host-poc` bra
 - **Hook** in `profiles/opxy-1.2.1.json`: an eight-byte absolute call at `0x8c073c34`, which replaces `CALL 0x8c071a50; CALL 0x8c070350` (the last driver registration and the host start, section 9.2) with `sdk_extensions_usb_host_init`. That function makes the same two calls, with the extension drivers registered between them, and returns the second call's result. It is the one point where the driver list exists, every stock driver is registered and no device has been enumerated yet.
 - **Glue** `sdk/platform/opxy-1.2.1/usb_host.cpp`: builds a 28-byte stock driver record per extension driver (at most two) and registers it with `0x8c0734a4`. The record's probe and remove are small per-slot trampolines that translate the stock device structure into the public `Device` and pass the probe's return value on as the remove context. `Services::log` goes to the device's own log through the stock logger. (The first version wrote a file, `usbhost.oxy`, from the GUI tick; it never appeared on the device, section 10.4a, and was removed.)
 - **Build wiring**: `tooling/native.py` (`usb_host` unit in the `extensions` service), and the pinned profile hash in `builder/core.mjs`.
-- **Diagnostic extension** `extensions/usb_probe` (this repository): one driver that matches the adapter by vendor and product ID (`0bda:8153`). Its probe logs what it is given (vendor and product ID, speed, address, device class triple, the configuration being tried and the count, the current configuration, interface count, `bMaxPower`, interface index) and **returns 0**, so the stack goes on to the next interface or configuration exactly as it does without it. Its remove logs the same line.
+- **Diagnostic extension** `deliverables/usb/usb_probe` (this repository): one driver that matches the adapter by vendor and product ID (`0bda:8153`). Its probe logs what it is given (vendor and product ID, speed, address, device class triple, the configuration being tried and the count, the current configuration, interface count, `bMaxPower`, interface index) and **returns 0**, so the stack goes on to the next interface or configuration exactly as it does without it. Its remove logs the same line.
 
 ### 10.2 Verification before the first device run (host only)
 
 - A host fixture (`tests/fixtures/usb_host.cpp`, `tests/test_usb_host.py` in the SDK) fakes the stock register, file and clock calls and a device image. It checks the event order, the two-driver limit, probe and remove forwarding with the context, the log flush and its overflow, and a refused registration.
-- `extensions/usb_probe/tests/probe.cpp`: passes (`sdk.py test --extension extensions/usb_probe`).
+- `deliverables/usb/usb_probe/tests/probe.cpp`: passes (`sdk.py test --extension deliverables/usb/usb_probe`).
 - The SDK's own check: 610 tests pass, with and without the stock OS image (`OPXY_TEST_STOCK_OS`); with it, the profile's `before` bytes at `0x8c073c34` are checked against the real `os.ldr`. Eight tests that need the private package are skipped.
-- A scratch firmware build with the Splitter Player machine and `usb_probe` completed (`../firmware/dev/003`, experimental, device operations off). The patched bytes at `0x8c073c34` decode to a call to `sdk_extensions_usb_host_init`.
+- A scratch firmware build with `usb_probe` completed (`../firmware/dev/003`, experimental, device operations off). The patched bytes at `0x8c073c34` decode to a call to `sdk_extensions_usb_host_init`.
 
 ### 10.3 Trade-offs and risks
 
@@ -707,7 +707,7 @@ Now the driver reads the configuration descriptor being tried (found by its `bCo
 
 What remains assumed: the adapter offers a CDC-ECM configuration (an RTL8153 does; RNDIS or vendor-only adapters are not handled); an Ethernet frame is one bulk transfer, as ECM defines; the network gives a lease by DHCP; IPv4 only. Interface numbers are taken to equal the stack's interface index, which the USB specification requires within a configuration. Only the RTL8153 has been tried on a device.
 
-Tests (`extensions/usb_ecm/tests/ecm.cpp`, with fake services and a fake network that answers ARP, DHCP, DNS and TCP): the RTL8153's real descriptor bytes give its layout; a differently laid out full-speed adapter (other endpoints, string index, language, 64-byte packets) is driven end to end with every frame accepted by its packet rule; a vendor-mode configuration is declined; the full read of a chunked response split across segments, a plain one, and the catalog's nested shape (only each entry's own `id`); each failure's popup (redirect, no ids, no connection, no DNS answer, no lease, no adapter); and that a tap that is not a double-tap does nothing.
+Tests (`deliverables/usb/usb_ecm/tests/ecm.cpp`, with fake services and a fake network that answers ARP, DHCP, DNS and TCP): the RTL8153's real descriptor bytes give its layout; a differently laid out full-speed adapter (other endpoints, string index, language, 64-byte packets) is driven end to end with every frame accepted by its packet rule; a vendor-mode configuration is declined; the full read of a chunked response split across segments, a plain one, and the catalog's nested shape (only each entry's own `id`); each failure's popup (redirect, no ids, no connection, no DNS answer, no lease, no adapter); and that a tap that is not a double-tap does nothing.
 
 ### 10.5 What is left
 

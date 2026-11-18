@@ -85,11 +85,11 @@ that lets a player leave an encoder empty (open-xy pull request #476) and one th
 lets a player build without any other machine (#481). From this repository:
 
 ```sh
-../.venv/bin/python ../open-xy/sdk.py test --machine machines/splitter-player
+../.venv/bin/python ../open-xy/sdk.py test --machine deliverables/splitter/splitter_player
 
 ../.venv/bin/python ../open-xy/sdk.py build --overwrite --out "../firmware/dev/001" \
   --stock-os ../firmware/1.2.1/os.ldr \
-  --machine machines/splitter-player
+  --machine deliverables/splitter/splitter_player
 ```
 
 Add a `--machine` for each other machine you want on the device. The build writes

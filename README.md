@@ -1,24 +1,19 @@
-# Open-XY Splitter
+# Epoxy
 
-Machines build on the Open-XY SDK, for the OP-XY on OS 1.2.1. They are built with the
+Machines and extensions build on the Open-XY SDK, for the OP-XY on OS 1.2.1. They are built with the
 [Open-XY SDK](https://github.com/etcetc000/open-xy) and reach the [builder](https://open-xy.com)
 through its catalog, which pins a tagged commit of this repository.
 
 | Machine | Kind | What it shows |
 | --- | --- | --- |
-| [Splitter Player](machines/splitter-player) | Player | A player that allows the user to split the OP-XY keyboard into two zones that can be assigned different octave transpositions. Non-destructive, doesn't record, only maps keys to notes. <br><br><img src="machines/splitter-player/screenshots/splitter_player.svg" width="50%"> |
-| [Splitter Aux](machines/splitter-aux) | Aux | An Aux machine that allows the user to split the OP-XY keyboard into two zones that can be assigned different instrument tracks and octave transpositions. Can record mapped notes. NOT IMPLEMENTED. |
-
-Each folder is one machine: `machine.json` (kind, SDK version and the numbers it
-prefers), `definition.json` (controls), its C++ and, for a synth, its artwork.
-Some have their own sound tests in `tests/`.
+| [Splitter Player](deliverables/splitter/splitter_player) | Player | A player that allows the user to split the OP-XY keyboard into two zones that can be assigned different octave transpositions. Non-destructive, doesn't record, only maps keys to notes. <br><br><img src="deliverables/splitter/splitter_player/screenshots/splitter_player.svg" width="75%"> |
 
 ## Checks
 
 Clone the SDK next to this repository, then from here:
 
 ```sh
-python ../open-xy/sdk.py test --machine machines/splitter-player
+python ../open-xy/sdk.py test --machine deliverables/splitter/splitter_player
 ```
 
 ## Licences
